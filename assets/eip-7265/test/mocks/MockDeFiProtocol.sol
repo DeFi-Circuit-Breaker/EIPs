@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import {SafeERC20} from "openzeppelin-contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
-import {ICircuitBreaker} from "../../src/interfaces/ICircuitBreaker.sol";
+import {IERC7265CircuitBreaker} from "../../src/interfaces/IERC7265CircuitBreaker.sol";
 import {ProtectedContract} from "../../src/core/ProtectedContract.sol";
 
 contract MockDeFiProtocol is ProtectedContract {
@@ -33,7 +33,7 @@ contract MockDeFiProtocol is ProtectedContract {
     function withdrawal(address _token, uint256 _amount) external {
         //  Your logic here
 
-        cbOutflowSafeTransfer(_token, msg.sender, _amount, false);
+        cbOutflowSafeTransfer(_token, msg.sender, _amount);
     }
 
     // Used to compare gas usage with and without circuitBreaker
@@ -48,6 +48,6 @@ contract MockDeFiProtocol is ProtectedContract {
     }
 
     function withdrawalNative(uint256 _amount) external {
-        cbOutflowNative(msg.sender, _amount, false);
+        cbOutflowNative(msg.sender, _amount);
     }
 }
